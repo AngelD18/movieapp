@@ -11,10 +11,23 @@ import Search from '../screens/Search';
 const Stack = createStackNavigator();
 
 export default function StackNavigation(props) {
-  const {navigation} =props;
+  const { navigation } = props;
 
-  const buttonLeft = () => {
-    return <IconButton icon="menu" onPress={() => navigation.openDrawer()} />
+  const buttonLeft = (screen) => {
+
+    switch (screen) {
+      case 'search':
+      case 'movie':
+        return (
+          <IconButton icon="arrow-left" onPress={() => navigation.goBack()} />
+        );
+      default:
+        return <IconButton icon="menu" onPress={() => navigation.openDrawer()} />
+    }
+  }
+
+  const buttonRight = () => {
+    return <IconButton icon="magnify" onPress={() => navigation.navigate('search')} />
   }
   return (
     <Stack.Navigator>
@@ -23,7 +36,8 @@ export default function StackNavigation(props) {
         component={Home}
         options={{
           title: 'TheMovieApp',
-          headerLeft: () => buttonLeft()
+          headerLeft: () => buttonLeft('home'),
+          headerRight: () => buttonRight()
         }}
 
       />
@@ -32,7 +46,8 @@ export default function StackNavigation(props) {
         component={Movie}
         options={{
           title: '',
-          headerLeft: () => buttonLeft()
+          headerLeft: () => buttonLeft('movie'),
+          headerRight: () => buttonRight()
         }}
 
       />
@@ -41,7 +56,8 @@ export default function StackNavigation(props) {
         component={News}
         options={{
           title: 'Nuevas Peliculas',
-          headerLeft: () => buttonLeft()
+          headerLeft: () => buttonLeft('news'),
+          headerRight: () => buttonRight()
         }}
 
       />
@@ -50,7 +66,8 @@ export default function StackNavigation(props) {
         component={Popular}
         options={{
           title: 'Peliculas Populares',
-          headerLeft: () => buttonLeft()
+          headerLeft: () => buttonLeft('popular'),
+          headerRight: () => buttonRight()
         }}
 
       />
@@ -59,7 +76,7 @@ export default function StackNavigation(props) {
         component={Search}
         options={{
           title: '',
-          headerLeft: () => buttonLeft()
+          headerLeft: () => buttonLeft('search')
         }}
 
       />

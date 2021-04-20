@@ -13,7 +13,7 @@ import {
 import Navigation from './src/navigation/Navigation';
 import PreferenceContext from './src/context/PreferencesContext';
 export default function App() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
   DefaultThemePaper.colors.primary = '#1ae1f2';
   DarkThemePaper.colors.primary = '#1ae1f2';
   DarkThemePaper.colors.accent = '#1ae1f2';

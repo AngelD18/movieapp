@@ -14,7 +14,7 @@ export default function Movie(props) {
   const { route } = props;
   const { id } = route.params;
 
-  const [movie, setMovie] = useState({});
+  const [movie, setMovie] = useState(null);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -23,14 +23,16 @@ export default function Movie(props) {
     });
   }, []);
 
-
+  if (!movie) return null;
   return (
     <Fragment>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <MovieImage posterPath={movie.poster_path} />
         <MovieTrailer setShow={setShow} />
         <MovieTitle movie={movie} />
         <MovieRating voteCount={movie.vote_count} voteAverage={movie.vote_average} />
+        <Text style={styles.overview}>{movie.overview}</Text>
+        <Text style={[styles.overview, { marginBottom: 30 }]}>Fecha de lanzamiento: {movie.release_date}</Text>
       </ScrollView>
       <ModalVideo show={show} setShow={setShow} idMovie={id} />
     </Fragment>
@@ -98,6 +100,8 @@ function MovieRating(props) {
         imageSize={20}
         style={{ marginRight: 15 }}
       />
+      <Text style={{ fontSize: 16, marginRight: 5 }}>{media}</Text>
+      <Text style={{ fontSize: 12, color: "#8697a5" }}>{voteCount} votos</Text>
     </View>
   )
 }
@@ -142,9 +146,15 @@ const styles = StyleSheet.create({
     color: '#8697a5'
   },
   viewRating: {
-    marginHorizontal: 3,
+    marginHorizontal: 30,
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  overview: {
+    marginHorizontal: 30,
+    marginTop: 20,
+    textAlign: 'justify',
+    color: '#8697a5'
   }
 })
